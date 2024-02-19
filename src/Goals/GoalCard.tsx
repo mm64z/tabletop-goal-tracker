@@ -55,5 +55,6 @@ const styles = StyleSheet.create({
   overall: {
     padding: 10,
     borderWidth: 1,
+    width: '100%',
   },
 });

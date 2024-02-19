@@ -40,7 +40,7 @@ export const TextField: FC<Parameters> = ({
   return (
     <View style={styles.row}>
       <Text style={styles.label}>{field}: </Text>
-      <TextInput onChangeText={(text) => {
+      <TextInput style={styles.textInput} onChangeText={(text) => {
         updateThisText(text)
       }}
         value={textField}></TextInput>
@@ -49,10 +49,23 @@ export const TextField: FC<Parameters> = ({
 }
 
 const styles = StyleSheet.create({
-  label: {
-    textTransform: 'capitalize',
-  },
   row: {
     flexDirection: 'row',
+    alignItems: 'center',
+    padding: 2,
+  },
+  label: {
+  //   flex: 1,
+  //   flexShrink: 1,
+    textTransform: 'capitalize',
+    textAlign: 'right',
+    width: 100,
+  },
+  textInput: {
+    flex: 1,
+    flexGrow: 3,
+    borderWidth: 1,
+    padding: 1,
+    overflow: 'hidden',
   }
 });

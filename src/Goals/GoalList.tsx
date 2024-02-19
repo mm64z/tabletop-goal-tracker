@@ -6,8 +6,9 @@ import { createSelector } from '@reduxjs/toolkit';
 import { GoalState } from './state/types';
 import { GoalCard } from './GoalCard';
 import { addGoal } from './state/reducer';
-import Clipboard from '@react-native-clipboard/clipboard';
+// import Clipboard from '@react-native-clipboard/clipboard';
 import { transcribeAllGoals } from './utils';
+import { Icon } from '@rneui/themed';
 
 type Parameters = {
   // style: StyleSheet.NamedStyles<any>;
@@ -28,7 +29,7 @@ export const GoalList: FC<Parameters> = ({
 
   function copyAllGoals() {
     const allText = transcribeAllGoals();
-    Clipboard.setString(allText);
+    // Clipboard.setString(allText);
   }
 
   return (
@@ -36,11 +37,19 @@ export const GoalList: FC<Parameters> = ({
     <Pressable style={styles.overall} accessible={false}>
         <Text style={{fontSize: 30}}>Track your goals</Text>
         <View style={{flexDirection: 'row'}}>
-          <Pressable onPress={addNewGoal}>
+          <Pressable style={styles.button} onPress={addNewGoal}>
+            <Icon 
+                name='plus'
+                type='feather'
+              />
             <Text>Add goal</Text>
           </Pressable>
-          <Pressable onPress={copyAllGoals}>
-            <Text>Copy all goals to clipboard</Text>
+          <Pressable style={styles.button} onPress={copyAllGoals}>
+            <Icon 
+              name='copy'
+              type='feather'
+            />
+            <Text>Copy all</Text>
           </Pressable>
         </View>
         <ScrollView>
@@ -65,15 +74,15 @@ const styles = {
   overall: {
     backgroundColor: '#eee',
     height: '100%',
+    width: '100%',
   },
   searchBar: {
     flex: 2,
     borderRadius: 10,
     margin: 2,
   },
-  addButton: {
+  button: {
     flex: 1,
-    flexDirection: 'column',
     backgroundColor: '#2196F3',
     alignItems: 'center' as const,
     justifyContent: 'center',
