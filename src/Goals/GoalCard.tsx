@@ -1,11 +1,10 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { FC, ReactElement } from "react";
-import { View, StyleSheet, Text, TextInput } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { View, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 import { ID } from "../types";
 import { GoalState } from "./state/types";
-import { updateGoal } from "./state/reducer";
-import { debounce } from "../utils";
+import { TextField } from "./TextField";
 
 
 interface Parameters {
@@ -26,84 +25,20 @@ export const GoalCard: FC<Parameters> = ({
   id,
 }): ReactElement => {
   const { character, title, length, motivation, complication, description, results }: State = useSelector(mapStateToProps(id));
-  const dispatch = useDispatch();
-
-  const updateGoalText = debounce((update) => {
-    dispatch(updateGoal({
-      id: id,
-      goal: update,
-    }))
-  })
 
   return (
-     <View style={styles.overall}>
-     <View style={styles.row}>
-       <Text>Character: </Text>
-       <TextInput onChangeText={(text) => {
-         updateGoalText({
-           character: text,
-         })
-       }}
-         value={character}></TextInput>
-     </View>
+    <View style={styles.overall}>
+     
+      <TextField id={id} field='character' text={character}/>
 
-       {/* Goal Length */}
-      <View style={styles.row}>
-        <Text>Goal: </Text>
-        <TextInput onChangeText={(text) => {
-          updateGoalText({
-            title: text,
-          })
-        }}
-          value={title}></TextInput>
-      </View>
-      <View style={styles.row}>
-        <Text>Length: </Text>
-        <TextInput onChangeText={(text) => {
-          updateGoalText({
-            length: text,
-          })
-        }}
-          value={length}></TextInput>
-      </View>
-
-      <View style={styles.row}>
-        <Text>Motivation: </Text>
-        <TextInput onChangeText={(text) => {
-          updateGoalText({
-            motivation: text,
-          })
-        }}
-          value={motivation}></TextInput>
-      </View>
-      <View style={styles.row}>
-        <Text>Complication: </Text>
-        <TextInput onChangeText={(text) => {
-          updateGoalText({
-            complication: text,
-          })
-        }}
-          value={complication}></TextInput>
-      </View>
-      <View style={styles.row}>
-        <Text>Description: </Text>
-        <TextInput onChangeText={(text) => {
-          updateGoalText({
-            description: text,
-          })
-        }}
-          value={description}></TextInput>
-      </View>
-      <View style={styles.row}>
-        <Text>Results: </Text>
-        <TextInput onChangeText={(text) => {
-          updateGoalText({
-            results: text,
-          })
-        }}
-          value={results}></TextInput>
-      </View>
+      {/* Goal Length */}
+      <TextField id={id} field='title' text={title}/>
+      <TextField id={id} field='length' text={length}/>
       
+      <TextField id={id} field='motivation' text={motivation}/>
+      <TextField id={id} field='complication' text={complication}/>
+      <TextField id={id} field='description' text={description}/>
+      <TextField id={id} field='results' text={results}/>
     </View>
   )
 }
@@ -112,7 +47,7 @@ const selectGoals = ({ goal }: { goal: GoalState }) => goal.allGoals;
 
 const mapStateToProps = (id: ID) => {
   return createSelector([selectGoals], (allGoals) => {
-    return allGoals[id]
+    return allGoals[id];
   })
 }
 
@@ -121,7 +56,4 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
   },
-  row: {
-    flexDirection: 'row',
-  }
 });
