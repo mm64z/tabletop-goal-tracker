@@ -4,17 +4,18 @@ import { Goal, GoalState } from "./state/types"
 
 
 function transcribeGoal(goal: Goal) {
-  return `Character: ${goal.character}
-Goal: ${goal.title} (${goal.length})
+  return `Goal: ${goal.goal} (${goal.length})
 Motivation: ${goal.motivation}
 Complication: ${goal.complication}
-Description: ${goal.description}
-Results: ${goal.results}`;
+Notes: ${goal.notes}`;
 }
 
 export function transcribeAllGoals() {
-  const goals: IdMap<Goal> = store.getState().goal.allGoals;
-  return Object.values(goals).map((goal) => {
+  const goalState: GoalState = store.getState().goal;
+  const goals: IdMap<Goal> = goalState.allGoals;
+  let toReturn = [`${goalState.character} goals`];
+
+  return [toReturn, ...Object.values(goals).map((goal) => {
     return transcribeGoal(goal)
-  }).join("\n===============\n")
+  })].join("\n===============\n")
 }

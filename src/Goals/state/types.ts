@@ -3,17 +3,18 @@ import { ID, IdMap } from "../../types";
 
 export interface Goal {
   id: ID,
-  character: string,
-  title: string,
+  goal: string,
   length: string,
   motivation: string,
   complication: string,
-  description: string,
-  results: string,
+  notes: string,
 }
+
+export const GOAL_LENGTHS = ['short', 'medium', 'long'];
 
 export interface GoalState {
   allGoals: IdMap<Goal>,
+  character: string,
 }
 
 export interface AddGoalAction {
@@ -27,4 +28,8 @@ export interface UpdateGoalAction {
 
 export interface DeleteGoalAction {
   id: ID,
+}
+
+export interface UpdateCharacterAction {
+  character: string,
 }

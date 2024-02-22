@@ -35,14 +35,18 @@ export const TextField: FC<Parameters> = ({
         [field]: update,
       },
     }))
-  })
+  }, 500)
 
   return (
     <View style={styles.row}>
       <Text style={styles.label}>{field}: </Text>
-      <TextInput style={styles.textInput} onChangeText={(text) => {
-        updateThisText(text)
-      }}
+      <TextInput 
+        style={styles.textInput}
+        multiline
+        rows={3}
+        onChangeText={(text) => {
+          updateThisText(text)
+        }}
         value={textField}></TextInput>
     </View>)
 
@@ -65,7 +69,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 3,
     borderWidth: 1,
+    textAlignVertical: 'top',
     padding: 1,
+    paddingHorizontal: 3,
     overflow: 'hidden',
+    maxHeight: 820,
   }
 });

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AddGoalAction, DeleteGoalAction, GoalState, UpdateGoalAction } from "./types";
+import { AddGoalAction, DeleteGoalAction, GoalState, UpdateCharacterAction, UpdateGoalAction } from "./types";
 import { generateID } from "../../utils";
 
 
@@ -7,11 +7,13 @@ const slice = createSlice({
   name: 'goals',
   initialState: {
     allGoals: {},
+    character: '',
   },
   reducers: {
     addGoal: addGoalHandler,
     updateGoal: updateGoalHandler,
     deleteGoal: deleteGoalHandler,
+    updateCharacter: updateCharacterHandler,
 
   },
 });
@@ -20,13 +22,11 @@ function addGoalHandler (state: GoalState, { payload }: PayloadAction<AddGoalAct
   const newId = generateID();
   const defaultGoal = {
     id: newId,
-    character: '',
-    title: '',
+    goal: '',
     length: '',
     motivation: '',
     complication: '',
-    description: '',
-    results: '',
+    notes: '',
   }
   state.allGoals[newId] = {...defaultGoal, ...payload.goal};
 }
@@ -39,6 +39,9 @@ function deleteGoalHandler (state: GoalState, { payload }: PayloadAction<DeleteG
   delete state.allGoals[payload.id];
 }
 
+function updateCharacterHandler (state: GoalState, { payload }: PayloadAction<UpdateCharacterAction>) {
+  state.character = payload.character;
+}
 
-export const { addGoal, updateGoal, deleteGoal } = slice.actions;
+export const { addGoal, updateGoal, deleteGoal, updateCharacter } = slice.actions;
 export const GoalReducer = slice.reducer;
