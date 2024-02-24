@@ -46,7 +46,7 @@ export const TextField: FC<Parameters> = ({
       <TextInput 
         style={{...formFieldText, ...styles.textInput}}
         multiline={multiline !== false}
-        rows={3}
+        // rows={3}
         onChangeText={(text) => {
           updateThisText(text)
         }}
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     paddingHorizontal: 3,
     overflow: 'hidden',
-    maxHeight: 820,
     fontSize: 18
   }
 });

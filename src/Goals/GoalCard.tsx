@@ -34,7 +34,7 @@ export const GoalCard: FC<Parameters> = ({
   }
 
   return (
-    <View style={{...containerLight, ...styles.overall}}>
+    <View style={styles.overall}>
       <View style={{...row, alignItems: 'top'}}>
           <View style={{flex: 4}}>
               <View style={{paddingBottom: 16}}>
@@ -69,9 +69,7 @@ const mapStateToProps = (id: ID) => {
 const styles = StyleSheet.create({
   overall: {
     padding: 10,
-    paddingBottom: 20,
-    borderBottomColor: 'eee',
-    borderBottomWidth: 1,
+    paddingBottom: 100,
     width: '100%',
   }
 });
