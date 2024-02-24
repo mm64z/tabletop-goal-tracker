@@ -34,19 +34,21 @@ export const GoalCard: FC<Parameters> = ({
 
   return (
     <View style={styles.overall}>
-        <Icon
-          onPress={deleteThisGoal}
-          name='remove'
-          type='fontawesome'
-          color='#910a0a'
-          containerStyle={styles.delete}
-
-        ></Icon>
      
       {/* Goal Length */}
       <TextField id={id} field='goal' text={goal}/>
       <RadioSelector id={id} field='length' options={GOAL_LENGTHS} selected={length}/>
       
+      {/* after to render after to be clickable */}
+      <Icon
+        onPress={deleteThisGoal}
+        name='remove'
+        type='fontawesome'
+        color='#910a0a'
+        containerStyle={styles.delete}
+        hitSlop={8}
+      ></Icon>
+
       <TextField id={id} field='motivation' text={motivation}/>
       <TextField id={id} field='complication' text={complication}/>
       <TextField id={id} field='notes' text={notes}/>
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
   },
   delete: {
     position: 'absolute',
-    padding: 8,
+    padding: 4,
     alignItems: 'flex-start',
   }
 
