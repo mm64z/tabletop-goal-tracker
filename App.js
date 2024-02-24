@@ -5,13 +5,14 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './src/CoreState/store';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { containerLight } from "./theme";
 
 export default function App() {
   return (
     <SafeAreaProvider style={styles.tabNavigator}>
       <Provider store={store}>
         <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-          <View style={styles.container}>
+          <View style={containerLight}>
             <GoalList/>
             <ExpoStatusBar style="auto" />
           </View>
@@ -22,12 +23,6 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   tabNavigator: {
     marginTop: StatusBar.currentHeight,
   },
