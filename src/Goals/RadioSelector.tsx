@@ -43,7 +43,6 @@ export const RadioSelector: FC<Parameters> = ({
 
   return (
     <View style={styles.row}>
-      <Text style={{...formFieldLabel, paddingRight: 10, fontSize: 18, minWidth: 110}}>{field}</Text>
       {options.map((option, i) => {
         const iconName = selected === option ? 'radio-button-checked' : 'radio-button-unchecked'
         return (<Pressable 
