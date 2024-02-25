@@ -61,8 +61,7 @@ export const formFieldLabel = {
     paddingRight: 6,
     color: textColorDarkFaded,
     fontFamily: formFont,
-    textTransform: 'capitalize',
-    textAlign: 'right'
+    textTransform: 'capitalize'
 }
 export const formFieldText = {
     borderBottomColor: borderBottomFormField,

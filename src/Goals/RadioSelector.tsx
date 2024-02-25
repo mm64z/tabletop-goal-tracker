@@ -1,11 +1,10 @@
 import React, { FC, ReactElement, useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { ID } from '../types';
-import { debounce } from '../utils';
 import { updateGoal } from './state/reducer';
 import { useDispatch } from 'react-redux';
 import { Icon } from '@rneui/themed';
-import {formFieldLabel} from "../../theme";
+import {formFieldLabel, formFieldText} from "../../theme";
 
 type Parameters = {
   id: ID,
@@ -47,12 +46,12 @@ export const RadioSelector: FC<Parameters> = ({
         const iconName = selected === option ? 'radio-button-checked' : 'radio-button-unchecked'
         return (<Pressable 
           key={i}
-          style={{...styles.option, paddingRight: i === options.length - 1 ? 0 : 15, paddingLeft: i === 0 ? 0 : 15}}
+          style={{...styles.option, paddingRight: i === options.length - 1 ? 0 : 10, paddingLeft: i === 0 ? 0 : 10}}
           onPress={() => {
           dispatchGoalText(option)
         }}>
-          <Icon name={iconName} type='materialicons' size={18}/>
-          <Text style={{...formFieldLabel, fontSize: 18, paddingLeft: 4}}>{option} </Text>
+          <Icon name={iconName} type='materialicons' size={18} color={formFieldText.color}/>
+          <Text style={{...formFieldLabel, fontSize: 18, paddingLeft: 4}}>{option}-term</Text>
         </Pressable>)
       })}
     </View>)

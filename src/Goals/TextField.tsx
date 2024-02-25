@@ -4,13 +4,13 @@ import { ID } from '../types';
 import { debounce } from '../utils';
 import { updateGoal } from './state/reducer';
 import { useDispatch } from 'react-redux';
-import {formFieldLabel, formFieldText} from "../../theme";
+import { formFieldLabel, formFieldText } from "../../theme";
 
 type Parameters = {
   id: ID,
   field: string,
   text: string,
-  multiline?: boolean
+  rows?: number
 }
 
 type State = {
@@ -21,7 +21,7 @@ export const TextField: FC<Parameters> = ({
   id,
   field,
   text: origText,
-  multiline,
+  rows,
 }): ReactElement => {
   const dispatch = useDispatch();
   const [textField, setTextField] = useState(origText);
@@ -41,12 +41,12 @@ export const TextField: FC<Parameters> = ({
   }, 500)
 
   return (
-    <View style={styles.row}>
-      <Text style={{...formFieldLabel, paddingRight: 10, fontSize: 18, minWidth: 110}}>{field}</Text>
+    <View>
+      <Text style={{...formFieldLabel, fontSize: 18}}>{field}</Text>
       <TextInput 
         style={{...formFieldText, ...styles.textInput}}
-        multiline={multiline !== false}
-        // rows={3}
+        multiline
+        rows={rows ? rows : 2}
         onChangeText={(text) => {
           updateThisText(text)
         }}
