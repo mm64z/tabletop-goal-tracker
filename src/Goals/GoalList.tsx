@@ -10,6 +10,15 @@ import { transcribeAllGoals } from './utils';
 import { Icon } from '@rneui/themed';
 import * as Clipboard from 'expo-clipboard';
 import { debounce } from '../utils';
+import {
+  buttonPrimary,
+  buttonPrimaryLabel,
+  buttonSecondary, buttonSecondaryLabel,
+  containerLight,
+  formFieldLabel,
+  formFieldText,
+  row
+} from "../../theme";
 
 type Parameters = {
   // style: StyleSheet.NamedStyles<any>;
@@ -48,30 +57,34 @@ export const GoalList: FC<Parameters> = ({
 
   return (
     // <Pressable style={styles.overall} onPress={Keyboard.dismiss} accessible={false}>
-    <Pressable style={styles.overall} accessible={false}>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{fontSize: 30}}>Track goals for: </Text>
+    <Pressable style={{...containerLight, padding: 10 }} accessible={false}>
+      <View style={{...row, paddingBottom: 14}}>
+        <Text style={formFieldLabel}>Character</Text>
         <TextInput 
-          style={styles.textInput}
+          style={{...formFieldText, flex: 2}}
           onChangeText={(text) => {
             updateThisText(text)
           }}
           value={textField}/>
       </View>
         <View style={{flexDirection: 'row'}}>
-          <Pressable style={styles.button} onPress={addNewGoal}>
-            <Icon 
+          <Pressable style={{...buttonPrimary, flex: 3, margin: 2}} onPress={addNewGoal}>
+            <Icon
+                style={{paddingRight: 4}}
                 name='plus'
                 type='feather'
-              />
-            <Text>Add goal</Text>
+                color={buttonPrimaryLabel.color}
+            />
+            <Text style={{...buttonPrimaryLabel, fontSize: 16}}>add goal</Text>
           </Pressable>
-          <Pressable style={styles.button} onPress={copyAllGoals}>
-            <Icon 
+          <Pressable style={{...buttonSecondary, flex: 1, margin: 2}} onPress={copyAllGoals}>
+            <Icon
+              style={{paddingRight: 4}}
               name='copy'
               type='feather'
+              color={buttonSecondaryLabel.color}
             />
-            <Text>Copy all</Text>
+            <Text style={{...buttonSecondaryLabel, fontSize: 16}}>copy all</Text>
           </Pressable>
         </View>
         <ScrollView>
@@ -93,30 +106,4 @@ const mapStateToProps = () => {
       goalList: Object.keys(allGoals),
       character: character };
   })
-}
-
-
-const styles = {
-  overall: {
-    backgroundColor: '#eee',
-    height: '100%',
-    width: '100%',
-    padding: 10,
-  },
-  textInput: {
-    width: '33%',
-    borderWidth: 1,
-    padding: 5,
-    overflow: 'hidden',
-    fontSize: 20,
-  },
-  button: {
-    flex: 1,
-    backgroundColor: '#2196F3',
-    alignItems: 'center' as const,
-    justifyContent: 'center',
-    paddingVertical: 5,
-    borderRadius: 10,
-    margin: 2,
-  }
 }

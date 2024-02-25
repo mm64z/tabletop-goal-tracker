@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { FC, ReactElement } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import React, { FC, ReactElement } from "react";
+import {View, StyleSheet, Text, TextInput} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { ID } from "../types";
 import { GOAL_LENGTHS, GoalState } from "./state/types";
@@ -8,6 +8,7 @@ import { TextField } from "./TextField";
 import { RadioSelector } from "./RadioSelector";
 import { Icon } from "@rneui/themed";
 import { deleteGoal } from "./state/reducer";
+import { containerLight, formFieldLabel, row } from "../../theme";
 
 
 interface Parameters {
@@ -34,24 +35,25 @@ export const GoalCard: FC<Parameters> = ({
 
   return (
     <View style={styles.overall}>
-     
-      {/* Goal Length */}
-      <TextField id={id} field='goal' text={goal}/>
-      <RadioSelector id={id} field='length' options={GOAL_LENGTHS} selected={length}/>
-      
-      {/* after to render after to be clickable */}
-      <Icon
-        onPress={deleteThisGoal}
-        name='remove'
-        type='fontawesome'
-        color='#910a0a'
-        containerStyle={styles.delete}
-        hitSlop={8}
-      ></Icon>
-
-      <TextField id={id} field='motivation' text={motivation}/>
-      <TextField id={id} field='complication' text={complication}/>
-      <TextField id={id} field='notes' text={notes}/>
+      <View style={{...row, alignItems: 'top'}}>
+          <View style={{flex: 4}}>
+              <View style={{paddingBottom: 16}}>
+                  <TextField id={id} field='goal' text={goal} multiline={false}/>
+                  <RadioSelector id={id} field='length' options={GOAL_LENGTHS} selected={length}/>
+              </View>
+              <TextField id={id} field='motivation' text={motivation}/>
+              <TextField id={id} field='complication' text={complication}/>
+              <TextField id={id} field='notes' text={notes}/>
+          </View>
+          <View>
+              <Icon
+                  onPress={deleteThisGoal}
+                  name='close'
+                  type='fontawesome'
+                  style={{paddingLeft: 15}}
+              ></Icon>
+          </View>
+      </View>
     </View>
   )
 }
@@ -67,15 +69,7 @@ const mapStateToProps = (id: ID) => {
 const styles = StyleSheet.create({
   overall: {
     padding: 10,
-    borderWidth: 1,
+    paddingBottom: 100,
     width: '100%',
-    margin: 2,
-    marginRight: 30,
-  },
-  delete: {
-    position: 'absolute',
-    padding: 4,
-    alignItems: 'flex-start',
   }
-
 });

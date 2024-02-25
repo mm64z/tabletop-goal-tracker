@@ -5,6 +5,7 @@ import { debounce } from '../utils';
 import { updateGoal } from './state/reducer';
 import { useDispatch } from 'react-redux';
 import { Icon } from '@rneui/themed';
+import {formFieldLabel} from "../../theme";
 
 type Parameters = {
   id: ID,
@@ -42,18 +43,16 @@ export const RadioSelector: FC<Parameters> = ({
 
   return (
     <View style={styles.row}>
-      <Text style={styles.label}>{field}: </Text>
       {options.map((option, i) => {
         const iconName = selected === option ? 'radio-button-checked' : 'radio-button-unchecked'
         return (<Pressable 
           key={i}
-          style={styles.option}
+          style={{...styles.option, paddingRight: i === options.length - 1 ? 0 : 15, paddingLeft: i === 0 ? 0 : 15}}
           onPress={() => {
           dispatchGoalText(option)
         }}>
-          <Icon name={iconName}
-            type='materialicons'/>
-          <Text style={styles.optionLabel}>{option} </Text>
+          <Icon name={iconName} type='materialicons' size={18}/>
+          <Text style={{...formFieldLabel, fontSize: 18, paddingLeft: 4}}>{option} </Text>
         </Pressable>)
       })}
     </View>)
@@ -64,21 +63,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 2,
+    paddingVertical: 8,
+    paddingHorizontal: 2
   },
   option: {
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 15,
-  },
-  label: {
-  //   flex: 1,
-  //   flexShrink: 1,
-    textTransform: 'capitalize',
-    textAlign: 'right',
-    width: 100,
-  },
-  optionLabel: {
-    textTransform: 'capitalize',
+    flexDirection: 'row'
   }
 });

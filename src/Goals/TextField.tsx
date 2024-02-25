@@ -4,11 +4,13 @@ import { ID } from '../types';
 import { debounce } from '../utils';
 import { updateGoal } from './state/reducer';
 import { useDispatch } from 'react-redux';
+import {formFieldLabel, formFieldText} from "../../theme";
 
 type Parameters = {
   id: ID,
   field: string,
-  text: string,  
+  text: string,
+  multiline?: boolean
 }
 
 type State = {
@@ -19,6 +21,7 @@ export const TextField: FC<Parameters> = ({
   id,
   field,
   text: origText,
+  multiline,
 }): ReactElement => {
   const dispatch = useDispatch();
   const [textField, setTextField] = useState(origText);
@@ -39,11 +42,11 @@ export const TextField: FC<Parameters> = ({
 
   return (
     <View style={styles.row}>
-      <Text style={styles.label}>{field}: </Text>
+      <Text style={{...formFieldLabel, paddingRight: 10, fontSize: 18, minWidth: 110}}>{field}</Text>
       <TextInput 
-        style={styles.textInput}
-        multiline
-        rows={3}
+        style={{...formFieldText, ...styles.textInput}}
+        multiline={multiline !== false}
+        // rows={3}
         onChangeText={(text) => {
           updateThisText(text)
         }}
@@ -58,21 +61,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 2,
   },
-  label: {
-  //   flex: 1,
-  //   flexShrink: 1,
-    textTransform: 'capitalize',
-    textAlign: 'right',
-    width: 100,
-  },
   textInput: {
-    flex: 1,
     flexGrow: 3,
-    borderWidth: 1,
     textAlignVertical: 'top',
-    padding: 1,
     paddingHorizontal: 3,
     overflow: 'hidden',
-    maxHeight: 820,
+    fontSize: 18
   }
 });
