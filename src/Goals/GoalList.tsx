@@ -87,7 +87,7 @@ export const GoalList: FC<Parameters> = ({
             <Text style={{...buttonSecondaryLabel, fontSize: 16}}>copy all</Text>
           </Pressable>
         </View>
-        <ScrollView>
+        <ScrollView style={{paddingHorizontal: 15}}>
           {goalList.map((id, i) => {
             return <GoalCard id={id} key={id}/>
           })}
