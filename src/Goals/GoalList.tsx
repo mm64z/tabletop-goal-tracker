@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { ID } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,6 +34,10 @@ export const GoalList: FC<Parameters> = ({
   const { goalList, character }: State = useSelector(mapStateToProps());
   const dispatch = useDispatch();
   const [textField, setTextField] = useState(character);
+  useEffect(() => {
+    if (character !== textField)
+      setTextField(character)
+  },[character])
 
   function addNewGoal() {
     dispatch(addGoal({}));
@@ -91,8 +95,8 @@ const selectCharacter = ({ goal }: { goal: GoalState }) => goal.character;
 const mapStateToProps = () => {
   return createSelector([selectGoals, selectCharacter], 
     (allGoals, character) => {
-    return { 
-      goalList: Object.keys(allGoals),
-      character: character };
+      return { 
+        goalList: Object.keys(allGoals),
+        character: character };
   })
 }

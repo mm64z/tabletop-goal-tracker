@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AddGoalAction, DeleteGoalAction, GoalState, UpdateCharacterAction, UpdateGoalAction } from "./types";
+import { AddGoalAction, DeleteGoalAction, GoalState, LoadStateAction, UpdateCharacterAction, UpdateGoalAction } from "./types";
 import { generateID } from "../../utils";
 
 
@@ -14,7 +14,7 @@ const slice = createSlice({
     updateGoal: updateGoalHandler,
     deleteGoal: deleteGoalHandler,
     updateCharacter: updateCharacterHandler,
-
+    loadState: loadStateHandler,
   },
 });
 
@@ -42,6 +42,10 @@ function deleteGoalHandler (state: GoalState, { payload }: PayloadAction<DeleteG
 function updateCharacterHandler (state: GoalState, { payload }: PayloadAction<UpdateCharacterAction>) {
   state.character = payload.character;
 }
+function loadStateHandler (state: GoalState, { payload }: PayloadAction<LoadStateAction>) {
+  state.character = payload.newState.character;
+  state.allGoals = payload.newState.allGoals;
+}
 
-export const { addGoal, updateGoal, deleteGoal, updateCharacter } = slice.actions;
+export const { addGoal, updateGoal, deleteGoal, updateCharacter, loadState } = slice.actions;
 export const GoalReducer = slice.reducer;

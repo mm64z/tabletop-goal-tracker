@@ -33,3 +33,7 @@ export interface DeleteGoalAction {
 export interface UpdateCharacterAction {
   character: string,
 }
+
+export interface LoadStateAction {
+  newState: GoalState,
+}

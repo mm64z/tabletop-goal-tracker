@@ -1,13 +1,16 @@
 import React, { FC, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as FileSystem from 'expo-file-system';
-import { transcribeAllGoals } from "./utils";
+import { getAllGoalsAsJSON, transcribeAllGoals } from "./utils";
 import * as Clipboard from 'expo-clipboard';
 import { GoalState } from "./state/types";
 import { Text, View, StyleSheet, Platform } from "react-native";
 import { Menu, MenuTrigger, MenuOptions, MenuOption } from "react-native-popup-menu";
 import { Divider } from "@rneui/themed";
 import { buttonSecondary, buttonSecondaryLabel } from "../../theme";
+import { useToast } from "react-native-toast-notifications";
+import * as DocumentPicker from 'expo-document-picker';
+import { loadState } from "./state/reducer";
 
 interface Parameters {
 }
@@ -27,42 +30,15 @@ export const SaveLoadDropdown: FC<Parameters> = ({
 }): ReactElement => {
   const dispatch = useDispatch();
   const character = useSelector(selectCharacter);
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: 'Save', value: 'save' },
-    { label: 'Save to File', value: ACTIONS.SAVE_FILE, parent: 'save' },
-    { label: 'Copy to Clipboard', value: ACTIONS.SAVE_CLIPBOARD, parent: 'save' },
-    { label: 'Load', value: 'load' },
-    { label: 'Load from File', value: ACTIONS.LOAD_FILE, parent: 'load' },
-    { label: 'Load from Paste', value: ACTIONS.LOAD_TEXT, parent: 'load' }
-  ]);
-
-  const placeholderText = 'Save/load options';
-
-  function pickValue (value) {
-    console.log(value);
-    console.log(character);
-    setOpen(false);
-    if (value === ACTIONS.SAVE_FILE) {
-      saveToFile();
-    } else if (value === ACTIONS.SAVE_CLIPBOARD) {
-      copyAllGoals();
-    } else if (value === ACTIONS.LOAD_FILE) {
-      loadFromFile();
-    } else if (value === ACTIONS.LOAD_TEXT) {
-      loadText();
-    }
-    setValue(placeholderText)
-  }
+  const toast = useToast();
 
   function saveToFile() {
-    const allText = transcribeAllGoals();
+    const allText = getAllGoalsAsJSON();
     if (Platform.OS === 'web') {
       const element = document.createElement("a");
       const file = new Blob([allText], {type: 'text/plain'});
       element.href = URL.createObjectURL(file);
-      element.download = `${character}.txt`;
+      element.download = `${character}.json`;
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
     } else {
@@ -70,10 +46,14 @@ export const SaveLoadDropdown: FC<Parameters> = ({
       FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync().then((permissions) => {
         if (permissions.granted) {
           const path = permissions.directoryUri;
-          FileSystem.StorageAccessFramework.createFileAsync(path, `${character}.txt`, 'application/text')
+          FileSystem.StorageAccessFramework.createFileAsync(path, `${character}.json`, 'application/text')
           .then((fileURI) => {
             FileSystem.writeAsStringAsync(fileURI, allText, {'encoding': 'utf8'})
-            .then(() => console.log(`File written to ${character}.txt`))
+            .then(() => toast.show(`Saved to ${character}.json`,{
+              placement: 'bottom',
+              duration: 1000,
+              animationType: 'slide-in',
+            }))
             .catch((err) => console.log(err.message));
           })
         }
@@ -86,8 +66,23 @@ export const SaveLoadDropdown: FC<Parameters> = ({
     Clipboard.setStringAsync(allText);
   }
 
-  function loadFromFile() {
-
+  async function loadFromFile() {
+    const response = await DocumentPicker.getDocumentAsync ({
+      type: 'application/json'
+    });
+    response?.assets.map(async (file) => {
+      let fileContent = '';
+      if (Platform.OS === 'web') {
+        fileContent = atob(file.uri.substring(29));
+      } else {
+        fileContent = await FileSystem.readAsStringAsync(file.uri, {
+          encoding: 'utf8',
+        });
+      }
+      dispatch(loadState({
+        newState: JSON.parse(fileContent)
+      }))
+    })
   }
 
   function loadText() {
@@ -96,7 +91,6 @@ export const SaveLoadDropdown: FC<Parameters> = ({
 
   return (
     <View style={{minHeight: 10}}>
-      {/* try menu  */}
       <Menu>
         <MenuTrigger>
           <Text style={{...buttonSecondary, ...buttonSecondaryLabel}}>save/load options</Text>

@@ -19,3 +19,8 @@ export function transcribeAllGoals() {
     return transcribeGoal(goal)
   })].join("\n===============\n")
 }
+
+export function getAllGoalsAsJSON() {
+  const goalState: GoalState = store.getState().goal;
+  return JSON.stringify(goalState);
+}

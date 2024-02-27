@@ -7,20 +7,23 @@ import store, { persistor } from './src/CoreState/store';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { containerLight } from "./theme";
 import { MenuProvider } from 'react-native-popup-menu';
+import { ToastProvider } from 'react-native-toast-notifications'
 
 export default function App() {
   return (
     <SafeAreaProvider style={styles.tabNavigator}>
-      <MenuProvider>
-        <Provider store={store}>
-          <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-            <View style={containerLight}>
-              <GoalList/>
-              <ExpoStatusBar style="auto" />
-            </View>
-          </PersistGate>
-        </Provider>
-      </MenuProvider>
+    <MenuProvider>
+    <ToastProvider>
+      <Provider store={store}>
+        <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
+          <View style={containerLight}>
+            <GoalList/>
+            <ExpoStatusBar style="auto" />
+          </View>
+        </PersistGate>
+      </Provider>
+    </ToastProvider>
+    </MenuProvider>
     </SafeAreaProvider>
   );
 }
