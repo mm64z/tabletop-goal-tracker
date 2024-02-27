@@ -6,18 +6,21 @@ import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './src/CoreState/store';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { containerLight } from "./theme";
+import { MenuProvider } from 'react-native-popup-menu';
 
 export default function App() {
   return (
     <SafeAreaProvider style={styles.tabNavigator}>
-      <Provider store={store}>
-        <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-          <View style={containerLight}>
-            <GoalList/>
-            <ExpoStatusBar style="auto" />
-          </View>
-        </PersistGate>
-      </Provider>
+      <MenuProvider>
+        <Provider store={store}>
+          <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
+            <View style={containerLight}>
+              <GoalList/>
+              <ExpoStatusBar style="auto" />
+            </View>
+          </PersistGate>
+        </Provider>
+      </MenuProvider>
     </SafeAreaProvider>
   );
 }

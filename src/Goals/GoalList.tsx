@@ -8,7 +8,6 @@ import { GoalCard } from './GoalCard';
 import { addGoal, updateCharacter } from './state/reducer';
 import { transcribeAllGoals } from './utils';
 import { Icon } from '@rneui/themed';
-import * as Clipboard from 'expo-clipboard';
 import { debounce } from '../utils';
 import {
   buttonPrimary,
@@ -19,6 +18,7 @@ import {
   formFieldText,
   row
 } from "../../theme";
+import { SaveLoadDropdown } from './SaveLoadDropdown';
 
 type Parameters = {
   // style: StyleSheet.NamedStyles<any>;
@@ -37,11 +37,6 @@ export const GoalList: FC<Parameters> = ({
 
   function addNewGoal() {
     dispatch(addGoal({}));
-  }
-
-  function copyAllGoals() {
-    const allText = transcribeAllGoals();
-    Clipboard.setStringAsync(allText);
   }
   
   function updateThisText(text) {
@@ -77,15 +72,9 @@ export const GoalList: FC<Parameters> = ({
             />
             <Text style={{...buttonPrimaryLabel, fontSize: 16}}>add goal</Text>
           </Pressable>
-          <Pressable style={{...buttonSecondary, flex: 1, margin: 2}} onPress={copyAllGoals}>
-            <Icon
-              style={{paddingRight: 4}}
-              name='copy'
-              type='feather'
-              color={buttonSecondaryLabel.color}
-            />
-            <Text style={{...buttonSecondaryLabel, fontSize: 16}}>copy all</Text>
-          </Pressable>
+          <View style={{flex: 1, margin: 2}}>
+            <SaveLoadDropdown/>
+          </View>
         </View>
         <ScrollView style={{paddingHorizontal: 15}}>
           {goalList.map((id, i) => {
