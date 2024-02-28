@@ -102,7 +102,6 @@ export const SaveLoadDropdown: FC<Parameters> = ({
           <Divider />
           <Text style={{fontWeight: 'bold'}}>Load</Text>
           <MenuOption onSelect={loadFromFile} text='Load from File' />
-          <MenuOption onSelect={loadText} text='Load from Text' />
         </MenuOptions>
       </Menu>
     </View>
