@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AddGoalAction, DeleteGoalAction, GoalState, LoadStateAction, UpdateCharacterAction, UpdateGoalAction } from "./types";
 import { generateID } from "../../utils";
+import { REHYDRATE } from "redux-persist";
 
 
 const slice = createSlice({
@@ -8,6 +9,7 @@ const slice = createSlice({
   initialState: {
     allGoals: {},
     character: '',
+    loadedData: 0,
   },
   reducers: {
     addGoal: addGoalHandler,
@@ -16,6 +18,14 @@ const slice = createSlice({
     updateCharacter: updateCharacterHandler,
     loadState: loadStateHandler,
   },
+  extraReducers: (builder) => {
+    builder.addCase(REHYDRATE, (state, action: any) => {
+      if (action.payload) {
+        state.allGoals = action.payload.goal.allGoals;
+        state.character = action.payload.goal.character;
+      }
+    })
+  }
 });
 
 function addGoalHandler (state: GoalState, { payload }: PayloadAction<AddGoalAction>) {
@@ -45,6 +55,7 @@ function updateCharacterHandler (state: GoalState, { payload }: PayloadAction<Up
 function loadStateHandler (state: GoalState, { payload }: PayloadAction<LoadStateAction>) {
   state.character = payload.newState.character;
   state.allGoals = payload.newState.allGoals;
+  state.loadedData += 1;
 }
 
 export const { addGoal, updateGoal, deleteGoal, updateCharacter, loadState } = slice.actions;

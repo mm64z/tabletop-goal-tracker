@@ -23,11 +23,11 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        ignoredPaths: ['core.allPals']
+        ignoredPaths: ['']
       },
       immutableCheck: {
         // Ignore state paths
-        ignoredPaths: ['core.allPals']
+        ignoredPaths: ['']
       }
     }),
   })

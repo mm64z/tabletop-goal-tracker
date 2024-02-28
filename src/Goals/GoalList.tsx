@@ -32,12 +32,12 @@ type State = {
 export const GoalList: FC<Parameters> = ({
 }): ReactElement => {
   const { goalList, character }: State = useSelector(mapStateToProps());
+  const loadedData = useSelector(selectLoadedData);
   const dispatch = useDispatch();
   const [textField, setTextField] = useState(character);
   useEffect(() => {
-    if (character !== textField)
-      setTextField(character)
-  },[character])
+    setTextField(character)
+  },[loadedData])
 
   function addNewGoal() {
     dispatch(addGoal({}));
@@ -91,6 +91,7 @@ export const GoalList: FC<Parameters> = ({
 
 const selectGoals = ({ goal }: { goal: GoalState }) => goal.allGoals;
 const selectCharacter = ({ goal }: { goal: GoalState }) => goal.character;
+const selectLoadedData = ({ goal }: { goal: GoalState }) => goal.loadedData;
 
 const mapStateToProps = () => {
   return createSelector([selectGoals, selectCharacter], 
