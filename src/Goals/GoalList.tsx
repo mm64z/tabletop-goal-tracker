@@ -18,7 +18,7 @@ import {
   formFieldLabel,
   formFieldText,
   row
-} from "../../theme";
+} from "../theme";
 
 type Parameters = {
   // style: StyleSheet.NamedStyles<any>;

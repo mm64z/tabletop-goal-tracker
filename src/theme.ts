@@ -1,3 +1,5 @@
+import {SelectedFont} from "./fontOptions.theme";
+
 export const primaryColor = '#839788';
 export const secondaryColor = '#baa898';
 
@@ -9,7 +11,6 @@ export const textColorLight = '#fff';
 
 export const formFontSize = 20;
 export const formFont = 'Times New Roman';
-export const formFieldFont = 'Segoe Print';
 
 // #bfd7ea light blue, unused
 
@@ -69,9 +70,8 @@ export const formFieldText = {
     paddingVertical: 4,
     paddingHorizontal: 6,
     overflow: 'hidden',
-    fontSize: formFontSize,
     color: textColorDark,
-    fontFamily: formFieldFont
+    ...SelectedFont.getSelectedFont()
 }
 export const row = {
     flexDirection: 'row',

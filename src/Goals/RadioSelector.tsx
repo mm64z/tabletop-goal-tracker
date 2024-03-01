@@ -4,7 +4,7 @@ import { ID } from '../types';
 import { updateGoal } from './state/reducer';
 import { useDispatch } from 'react-redux';
 import { Icon } from '@rneui/themed';
-import {formFieldLabel, formFieldText} from "../../theme";
+import {formFieldLabel, formFieldText} from "../theme";
 
 type Parameters = {
   id: ID,

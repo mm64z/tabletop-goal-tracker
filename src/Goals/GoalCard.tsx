@@ -8,7 +8,7 @@ import { TextField } from "./TextField";
 import { RadioSelector } from "./RadioSelector";
 import { Icon } from "@rneui/themed";
 import { deleteGoal } from "./state/reducer";
-import { row } from "../../theme";
+import { row } from "../theme";
 
 
 interface Parameters {

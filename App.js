@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './src/CoreState/store';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { containerLight } from "./theme";
+import { containerLight } from "./src/theme";
 
 export default function App() {
   return (
