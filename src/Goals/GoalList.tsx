@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { ID } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +8,6 @@ import { GoalCard } from './GoalCard';
 import { addGoal, updateCharacter } from './state/reducer';
 import { transcribeAllGoals } from './utils';
 import { Icon } from '@rneui/themed';
-import * as Clipboard from 'expo-clipboard';
 import { debounce } from '../utils';
 import {
   buttonPrimary,
@@ -19,6 +18,7 @@ import {
   formFieldText,
   row
 } from "../theme";
+import { SaveLoadDropdown } from './SaveLoadDropdown';
 
 type Parameters = {
   // style: StyleSheet.NamedStyles<any>;
@@ -32,16 +32,15 @@ type State = {
 export const GoalList: FC<Parameters> = ({
 }): ReactElement => {
   const { goalList, character }: State = useSelector(mapStateToProps());
+  const loadedData = useSelector(selectLoadedData);
   const dispatch = useDispatch();
   const [textField, setTextField] = useState(character);
+  useEffect(() => {
+    setTextField(character)
+  },[loadedData])
 
   function addNewGoal() {
     dispatch(addGoal({}));
-  }
-
-  function copyAllGoals() {
-    const allText = transcribeAllGoals();
-    Clipboard.setStringAsync(allText);
   }
   
   function updateThisText(text) {
@@ -77,15 +76,9 @@ export const GoalList: FC<Parameters> = ({
             />
             <Text style={{...buttonPrimaryLabel, fontSize: 16}}>add goal</Text>
           </Pressable>
-          <Pressable style={{...buttonSecondary, flex: 1, margin: 2}} onPress={copyAllGoals}>
-            <Icon
-              style={{paddingRight: 4}}
-              name='copy'
-              type='feather'
-              color={buttonSecondaryLabel.color}
-            />
-            <Text style={{...buttonSecondaryLabel, fontSize: 16}}>copy all</Text>
-          </Pressable>
+          <View style={{flex: 1, margin: 2}}>
+            <SaveLoadDropdown/>
+          </View>
         </View>
         <ScrollView style={{paddingHorizontal: 15}}>
           {goalList.map((id, i) => {
@@ -98,12 +91,13 @@ export const GoalList: FC<Parameters> = ({
 
 const selectGoals = ({ goal }: { goal: GoalState }) => goal.allGoals;
 const selectCharacter = ({ goal }: { goal: GoalState }) => goal.character;
+const selectLoadedData = ({ goal }: { goal: GoalState }) => goal.loadedData;
 
 const mapStateToProps = () => {
   return createSelector([selectGoals, selectCharacter], 
     (allGoals, character) => {
-    return { 
-      goalList: Object.keys(allGoals),
-      character: character };
+      return {
+        goalList: Object.keys(allGoals),
+        character: character };
   })
 }

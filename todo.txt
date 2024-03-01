@@ -1,0 +1,5 @@
+save/load
+  copy/paste text
+  file
+
+track progress on goal

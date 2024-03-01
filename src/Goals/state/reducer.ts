@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AddGoalAction, DeleteGoalAction, GoalState, UpdateCharacterAction, UpdateGoalAction } from "./types";
+import { AddGoalAction, DeleteGoalAction, GoalState, LoadStateAction, UpdateCharacterAction, UpdateGoalAction } from "./types";
 import { generateID } from "../../utils";
+import { REHYDRATE } from "redux-persist";
 
 
 const slice = createSlice({
@@ -8,14 +9,23 @@ const slice = createSlice({
   initialState: {
     allGoals: {},
     character: '',
+    loadedData: 0,
   },
   reducers: {
     addGoal: addGoalHandler,
     updateGoal: updateGoalHandler,
     deleteGoal: deleteGoalHandler,
     updateCharacter: updateCharacterHandler,
-
+    loadState: loadStateHandler,
   },
+  extraReducers: (builder) => {
+    builder.addCase(REHYDRATE, (state, action: any) => {
+      if (action.payload) {
+        state.allGoals = action.payload.goal.allGoals;
+        state.character = action.payload.goal.character;
+      }
+    })
+  }
 });
 
 function addGoalHandler (state: GoalState, { payload }: PayloadAction<AddGoalAction>) {
@@ -42,6 +52,11 @@ function deleteGoalHandler (state: GoalState, { payload }: PayloadAction<DeleteG
 function updateCharacterHandler (state: GoalState, { payload }: PayloadAction<UpdateCharacterAction>) {
   state.character = payload.character;
 }
+function loadStateHandler (state: GoalState, { payload }: PayloadAction<LoadStateAction>) {
+  state.character = payload.newState.character;
+  state.allGoals = payload.newState.allGoals;
+  state.loadedData += 1;
+}
 
-export const { addGoal, updateGoal, deleteGoal, updateCharacter } = slice.actions;
+export const { addGoal, updateGoal, deleteGoal, updateCharacter, loadState } = slice.actions;
 export const GoalReducer = slice.reducer;

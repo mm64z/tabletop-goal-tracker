@@ -15,6 +15,7 @@ export const GOAL_LENGTHS = ['short', 'medium', 'long'];
 export interface GoalState {
   allGoals: IdMap<Goal>,
   character: string,
+  loadedData: number,
 }
 
 export interface AddGoalAction {
@@ -32,4 +33,8 @@ export interface DeleteGoalAction {
 
 export interface UpdateCharacterAction {
   character: string,
+}
+
+export interface LoadStateAction {
+  newState: GoalState,
 }
