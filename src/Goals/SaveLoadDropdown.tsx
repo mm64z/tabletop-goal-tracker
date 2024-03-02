@@ -7,10 +7,10 @@ import { GoalState } from "./state/types";
 import { Text, View, StyleSheet, Platform } from "react-native";
 import { Menu, MenuTrigger, MenuOptions, MenuOption } from "react-native-popup-menu";
 import { Divider } from "@rneui/themed";
-import { buttonSecondary, buttonSecondaryLabel } from "../../theme";
 import { useToast } from "react-native-toast-notifications";
 import * as DocumentPicker from 'expo-document-picker';
 import { loadState } from "./state/reducer";
+import { buttonSecondary, buttonSecondaryLabel } from "../theme";
 
 interface Parameters {
 }

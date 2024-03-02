@@ -6,7 +6,7 @@ import { ID } from "../types";
 import { GOAL_LENGTHS, GoalState } from "./state/types";
 import { RadioSelector } from "./RadioSelector";
 import { updateGoal } from "./state/reducer";
-import { formFieldLabel, formFieldText } from "../../theme";
+import { formFieldLabel, formFieldText } from "../theme";
 import { debounce } from "../utils";
 
 

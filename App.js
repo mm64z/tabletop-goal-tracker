@@ -7,9 +7,25 @@ import store, { persistor } from './src/CoreState/store';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { containerLight } from "./src/theme";
 import { MenuProvider } from 'react-native-popup-menu';
-import { ToastProvider } from 'react-native-toast-notifications'
+import { ToastProvider } from 'react-native-toast-notifications';
+import { useFonts } from 'expo-font';
+import { Tinos_400Regular } from '@expo-google-fonts/tinos';
 
 export default function App() {
+    
+  useFonts({
+    'ArchitectsDaughter_400Regular': require('./assets/fonts/ArchitectsDaughter-Regular.ttf'),
+    'CedarvilleCursive_400Regular': require('./assets/fonts/CedarvilleCursive-Regular.ttf'),
+    'IndieFlower_400Regular': require('./assets/fonts/IndieFlower-Regular.ttf'),
+    'NothingYouCouldDo_Regular': require('./assets/fonts/NothingYouCouldDo-Regular.ttf'),
+    'PatrickHandSC_400Regular': require('./assets/fonts/PatrickHandSC-Regular.ttf'),
+    'ReenieBeanie_400Regular': require('./assets/fonts/ReenieBeanie-Regular.ttf'),
+    'SueEllenFrancisco_400Regular': require('./assets/fonts/SueEllenFrancisco-Regular.ttf'),
+    Tinos_400Regular,
+    'WaitingfortheSunrise_400Regular': require('./assets/fonts/WaitingfortheSunrise-Regular.ttf'),
+    'Zeyada_400Regular': require('./assets/fonts/Zeyada-Regular.ttf'),
+  });
+
   return (
     <SafeAreaProvider style={styles.tabNavigator}>
     <MenuProvider>
