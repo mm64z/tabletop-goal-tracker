@@ -1,4 +1,4 @@
-import {SelectedFont, FontOptions} from "./fontOptions.theme";
+import {SelectedFont} from "./fontOptions.theme";
 
 export const primaryColor = '#839788';
 export const secondaryColor = '#baa898';
@@ -10,7 +10,7 @@ export const borderBottomFormField = '#b6a6a0';
 export const textColorLight = '#fff';
 
 export const formFontSize = 20;
-export const formFont = FontOptions.Tinos;
+export const formFont = 'Tinos_400Regular';
 
 // #bfd7ea light blue, unused
 
@@ -71,7 +71,7 @@ export const formFieldText = {
     paddingHorizontal: 6,
     overflow: 'hidden',
     color: textColorDark,
-    ...SelectedFont.getSelectedFont()
+    fontSize: 20,
 }
 export const row = {
     flexDirection: 'row',

@@ -16,6 +16,12 @@ export interface GoalState {
   allGoals: IdMap<Goal>,
   character: string,
   loadedData: number,
+  chosenFont: FontOption,
+}
+
+export interface FontOption {
+  fontFamily: string,
+  fontSize: number,
 }
 
 export interface AddGoalAction {
@@ -37,4 +43,7 @@ export interface UpdateCharacterAction {
 
 export interface LoadStateAction {
   newState: GoalState,
+}
+export interface UpdateFontAction {
+  newFont: FontOption,
 }

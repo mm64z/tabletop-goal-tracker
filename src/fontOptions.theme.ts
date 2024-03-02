@@ -8,42 +8,54 @@
 // import { WaitingfortheSunrise_400Regular } from '@expo-google-fonts/waiting-for-the-sunrise';
 // import { Zeyada_400Regular } from '@expo-google-fonts/zeyada';
 
-import { Tinos_400Regular } from '@expo-google-fonts/tinos';
 import { StyleSheet } from 'react-native';
-export const FontOptions = StyleSheet.create({
-    ArchitectsDaughter: {
-        fontFamily: 'ArchitectsDaughter_400Regular',
-        fontSize: 20,
-    },
-    CedarvilleCursive: {
-        fontFamily: 'CedarvilleCursive_Regular',
-        fontSize: 20,
-    },
-    IndieFlower: {
-        fontFamily: 'IndieFlower_Regular',
-        fontSize: 20,
-    },
-    PatrickHandSC: {
-        fontFamily: 'PatrickHandSC_Regular',
-        fontSize: 20,
-    },
-    ReenieBeanie: {
-        fontFamily: 'ReenieBeanie_Regular',
-        fontSize: 20,
-    },
-    SueEllenFrancisco: {
-        fontFamily: 'SueEllenFrancisco_Regular',
-        fontSize: 20,
-    },
-    WaitingfortheSunrise: {
-        fontFamily: 'WaitingfortheSunrise_Regular',
-        fontSize: 20,
-    },
-    Zeyada: {
-        fontFamily: 'Zeyada_Regular',
-        fontSize: 20,
-    },
-});
+export const FontOptions = {
+  ArchitectsDaughter: {
+    name: "Architects Daughter",
+    fontFamily: 'ArchitectsDaughter_400Regular',
+    fontSize: 20,
+  },
+  CedarvilleCursive: {
+    name: "Cedarville Cursive",
+    fontFamily: 'CedarvilleCursive_400Regular',
+    fontSize: 20,
+  },
+  IndieFlower: {
+    name: "Indie Flower",
+    fontFamily: 'IndieFlower_400Regular',
+    fontSize: 20,
+  },
+  NothingYouCouldDo: {
+    name: 'Nothing You Could Do',
+    fontFamily: 'NothingYouCouldDo_Regular',
+    fontSize: 20,
+  },
+  PatrickHandSC: {
+    name: "Patrick Hand SC",
+    fontFamily: 'PatrickHandSC_400Regular',
+    fontSize: 20,
+  },
+  ReenieBeanie: {
+    name: "Reenie Beanie",
+    fontFamily: 'ReenieBeanie_400Regular',
+    fontSize: 20,
+  },
+  SueEllenFrancisco: {
+    name: "Sue Ellen Francisco",
+    fontFamily: 'SueEllenFrancisco_400Regular',
+    fontSize: 20,
+  },
+  WaitingfortheSunrise: {
+    name: "Waiting for the Sunrise",
+    fontFamily: 'WaitingfortheSunrise_400Regular',
+    fontSize: 20,
+  },
+  Zeyada: {
+    name: "Zeyada",
+    fontFamily: 'Zeyada_400Regular',
+    fontSize: 20,
+  },
+};
 
 
 class FontSelector {

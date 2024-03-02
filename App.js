@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { StyleSheet, Text, StatusBar, View } from 'react-native';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { GoalList } from './src/Goals/GoalList';
@@ -13,7 +14,7 @@ import { Tinos_400Regular } from '@expo-google-fonts/tinos';
 
 export default function App() {
     
-  useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     'ArchitectsDaughter_400Regular': require('./assets/fonts/ArchitectsDaughter-Regular.ttf'),
     'CedarvilleCursive_400Regular': require('./assets/fonts/CedarvilleCursive-Regular.ttf'),
     'IndieFlower_400Regular': require('./assets/fonts/IndieFlower-Regular.ttf'),

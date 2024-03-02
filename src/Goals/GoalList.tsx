@@ -19,6 +19,8 @@ import {
   row
 } from "../theme";
 import { SaveLoadDropdown } from './SaveLoadDropdown';
+import { FontChoiceDropdown } from './FontChoiceDropdown';
+import { SelectedFont } from '../fontOptions.theme';
 
 type Parameters = {
   // style: StyleSheet.NamedStyles<any>;
@@ -32,6 +34,7 @@ type State = {
 export const GoalList: FC<Parameters> = ({
 }): ReactElement => {
   const { goalList, character }: State = useSelector(mapStateToProps());
+  const font = useSelector(selectFont);
   const loadedData = useSelector(selectLoadedData);
   const dispatch = useDispatch();
   const [textField, setTextField] = useState(character);
@@ -58,13 +61,20 @@ export const GoalList: FC<Parameters> = ({
     // <Pressable style={styles.overall} onPress={Keyboard.dismiss} accessible={false}>
     <Pressable style={{...containerLight, padding: 10 }} accessible={false}>
       <View style={{...row, paddingBottom: 14}}>
-        <Text style={formFieldLabel}>Character</Text>
-        <TextInput 
-          style={{...formFieldText, flex: 2}}
-          onChangeText={(text) => {
-            updateThisText(text)
-          }}
-          value={textField}/>
+        <View style={{flexDirection: 'row', flex: 1, flexGrow: 3}}>
+          <Text style={formFieldLabel}>Character</Text>
+          <TextInput 
+            style={{...formFieldText, flex: 2, 
+              fontFamily: font.fontFamily
+            }}
+            onChangeText={(text) => {
+              updateThisText(text)
+            }}
+            value={textField}/>
+        </View>
+        <View style={{flex: 1}}>
+          <FontChoiceDropdown/>
+        </View>
       </View>
         <View style={{flexDirection: 'row'}}>
           <Pressable style={{...buttonPrimary, flex: 3, margin: 2}} onPress={addNewGoal}>
@@ -92,6 +102,7 @@ export const GoalList: FC<Parameters> = ({
 const selectGoals = ({ goal }: { goal: GoalState }) => goal.allGoals;
 const selectCharacter = ({ goal }: { goal: GoalState }) => goal.character;
 const selectLoadedData = ({ goal }: { goal: GoalState }) => goal.loadedData;
+const selectFont = ({ goal }: { goal: GoalState }) => goal.chosenFont;
 
 const mapStateToProps = () => {
   return createSelector([selectGoals, selectCharacter], 

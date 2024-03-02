@@ -26,6 +26,7 @@ export const GoalForm: FC<Parameters> = ({
   id,
 }): ReactElement => {
   const { goal, length, motivation, complication, notes }: State = useSelector(mapStateToProps(id));
+  const font = useSelector(selectFont);
   const dispatch = useDispatch();
   const [goalText, setGoalText] = useState(goal);
   const [motivationText, setMotivationText] = useState(motivation);
@@ -63,7 +64,10 @@ export const GoalForm: FC<Parameters> = ({
       <View style={{ paddingBottom: 16 }}>
         <Text style={{...formFieldLabel, fontSize: 18}}>goal</Text>
         <TextInput 
-          style={{...formFieldText, ...styles.textInput}}
+          style={{...formFieldText, 
+            ...styles.textInput, 
+            fontFamily: font.fontFamily
+          }}
           multiline
           rows={1}
           onChangeText={(text) => {
@@ -75,9 +79,14 @@ export const GoalForm: FC<Parameters> = ({
         <RadioSelector id={id} field='length' options={GOAL_LENGTHS} selected={length} />
       </View>
       <View style={{ paddingBottom: 16 }}>
-        <Text style={{...formFieldLabel, fontSize: 18}}>motivation</Text>
+        <Text style={{...formFieldLabel, 
+          fontSize: 18
+          }}>motivation</Text>
         <TextInput 
-          style={{...formFieldText, ...styles.textInput}}
+          style={{...formFieldText, 
+            ...styles.textInput,
+            fontFamily: font.fontFamily
+          }}
           multiline
           rows={2}
           onChangeText={(text) => {
@@ -88,7 +97,10 @@ export const GoalForm: FC<Parameters> = ({
       <View style={{ paddingBottom: 16 }}>
         <Text style={{...formFieldLabel, fontSize: 18}}>complication</Text>
         <TextInput 
-          style={{...formFieldText, ...styles.textInput}}
+          style={{...formFieldText, 
+            ...styles.textInput,
+            fontFamily: font.fontFamily
+          }}
           multiline
           rows={2}
           onChangeText={(text) => {
@@ -99,7 +111,10 @@ export const GoalForm: FC<Parameters> = ({
       <View style={{ paddingBottom: 16 }}>
         <Text style={{...formFieldLabel, fontSize: 18}}>notes</Text>
         <TextInput 
-          style={{...formFieldText, ...styles.textInput}}
+          style={{...formFieldText, 
+            ...styles.textInput,
+            fontFamily: font.fontFamily
+          }}
           multiline
           rows={2}
           onChangeText={(text) => {
@@ -112,6 +127,7 @@ export const GoalForm: FC<Parameters> = ({
 }
 
 const selectGoals = ({ goal }: { goal: GoalState }) => goal.allGoals;
+const selectFont = ({ goal }: { goal: GoalState }) => goal.chosenFont;
 
 const mapStateToProps = (id: ID) => {
   return createSelector([selectGoals], (allGoals) => {
@@ -130,6 +146,5 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     paddingHorizontal: 3,
     overflow: 'hidden',
-    fontSize: 18
   }
 });

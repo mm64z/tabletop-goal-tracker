@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AddGoalAction, DeleteGoalAction, GoalState, LoadStateAction, UpdateCharacterAction, UpdateGoalAction } from "./types";
+import { AddGoalAction, DeleteGoalAction, GoalState, LoadStateAction, UpdateCharacterAction, UpdateFontAction, UpdateGoalAction } from "./types";
 import { generateID } from "../../utils";
 import { REHYDRATE } from "redux-persist";
+import { FontOptions } from "../../fontOptions.theme";
 
 
 const slice = createSlice({
@@ -10,6 +11,7 @@ const slice = createSlice({
     allGoals: {},
     character: '',
     loadedData: 0,
+    chosenFont: FontOptions.ArchitectsDaughter,
   },
   reducers: {
     addGoal: addGoalHandler,
@@ -17,12 +19,14 @@ const slice = createSlice({
     deleteGoal: deleteGoalHandler,
     updateCharacter: updateCharacterHandler,
     loadState: loadStateHandler,
+    updateFont: updateFontHandler,
   },
   extraReducers: (builder) => {
     builder.addCase(REHYDRATE, (state, action: any) => {
       if (action.payload) {
         state.allGoals = action.payload.goal.allGoals;
         state.character = action.payload.goal.character;
+        state.chosenFont = action.payload.goal.chosenFont;
       }
     })
   }
@@ -57,6 +61,9 @@ function loadStateHandler (state: GoalState, { payload }: PayloadAction<LoadStat
   state.allGoals = payload.newState.allGoals;
   state.loadedData += 1;
 }
+function updateFontHandler (state: GoalState, { payload }: PayloadAction<UpdateFontAction>) {
+  state.chosenFont = payload.newFont;
+}
 
-export const { addGoal, updateGoal, deleteGoal, updateCharacter, loadState } = slice.actions;
+export const { addGoal, updateGoal, deleteGoal, updateCharacter, loadState, updateFont } = slice.actions;
 export const GoalReducer = slice.reducer;
